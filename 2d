@@ -1,0 +1,61 @@
+
+import pygame
+import random
+
+# Game initialization
+pygame.init()
+
+# Game screen parameters
+SCREEN_WIDTH = 800
+SCREEN_HEIGHT = 600
+WHITE = (255, 255, 255)
+
+# Setting up the game screen
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+pygame.display.set_caption("Simple 2D Game")
+
+# Game state
+running = True
+
+# Game objects
+player = pygame.Rect(350, 500, 100, 100)
+enemy = pygame.Rect(350, 10, 50, 50)
+enemy_speed = 5
+
+# Colors of game objects
+player_color = (0, 128, 255)
+enemy_color = (255, 0, 0)
+
+# Main game loop
+while running:
+    # Event handling
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    # Player movement
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_LEFT]:
+        player.x -= 5
+    if keys[pygame.K_RIGHT]:
+        player.x += 5
+
+    # Enemy movement
+    enemy.y += enemy_speed
+    if enemy.y >= SCREEN_HEIGHT:
+        enemy.y = 0
+        enemy.x = random.randint(0, SCREEN_WIDTH)
+
+    # Clear the game screen
+    screen.fill(WHITE)
+
+    # Render player and enemy
+    pygame.draw.rect(screen, player_color, player)
+    pygame.draw.rect(screen, enemy_color, enemy)
+
+    # Update the game screen
+    pygame.display.update()
+
+# Game end
+pygame.quit()
+
